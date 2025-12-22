@@ -1,0 +1,5 @@
+import { Request, Response } from "express";
+import "dotenv/config";
+export declare const getProducts: (req: Request, res: Response) => Promise<void>;
+export declare const createProduct: (req: Request, res: Response) => Promise<void>;
+//# sourceMappingURL=productController.d.ts.map
