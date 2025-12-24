@@ -1,7 +1,7 @@
 import {
   ExpenseByCategorySummary,
   useGetDashboardMetricsQuery,
-} from "@/app/state/api";
+} from "@/state/api";
 import { TrendingUp } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 

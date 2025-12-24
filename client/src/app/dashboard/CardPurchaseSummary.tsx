@@ -1,5 +1,5 @@
 import numeral from "numeral";
-import { useGetDashboardMetricsQuery } from "../state/api";
+import { useGetDashboardMetricsQuery } from "../../state/api";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import {
   Area,
