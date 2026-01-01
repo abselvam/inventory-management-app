@@ -1,8 +1,10 @@
 import dotenv from "dotenv";
 dotenv.config();
+import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import path from "path";
+import { Pool } from "pg";
 
 const databaseUrl = process.env.DATABASE_URL;
 if (!databaseUrl) {
@@ -12,8 +14,15 @@ if (!databaseUrl) {
 
 console.log("Starting seed process...");
 
-// Use simple PrismaClient (no adapter)
-const prisma = new PrismaClient();
+// Create a Postgres pool
+const pool = new Pool({
+  connectionString: databaseUrl,
+});
+
+// Create adapter for PrismaClient
+const adapter = new PrismaPg(pool);
+
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   console.log("Connected to database");
@@ -31,9 +40,7 @@ async function main() {
     "expenseByCategory.json",
   ];
 
-  console.log(
-    "Skipping delete phase (tables are empty or permission issue)..."
-  );
+  console.log("Skipping delete phase...");
 
   console.log("\nSeeding new data...");
   for (const fileName of orderedFileNames) {
