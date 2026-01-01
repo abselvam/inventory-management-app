@@ -1,17 +1,24 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "../../generated/prisma";
+import { PrismaClient } from "@prisma/client";
+import "dotenv/config";
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
-import "dotenv/config";
 
+// const prisma = new PrismaClient();
+const databaseUrl = process.env.DATABASE_URL;
+if (!databaseUrl) {
+  console.error("DATABASE_URL not found in process.env!");
+  process.exit(1);
+}
+
+// Create a Postgres pool
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: databaseUrl,
 });
 
-// Create adapter
-const adapter = new PrismaPg(pool);
+// Export adapter for PrismaClient
+export const adapter = new PrismaPg(pool);
 
-// Create PrismaClient with adapter
 const prisma = new PrismaClient({ adapter });
 
 export const getProducts = async (

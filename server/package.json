@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "ts-node prisma/seed.ts",
-    "build": "rimraf dist && npx tsc",
-    "start": "npm run build && node dist/index.js",
+    "build": "rimraf dist && npx prisma generate && npx tsc",
+    "start": "npm run build && node dist/src/index.js",
     "dev": "npm run build && concurrently \"npx tsc -w\" \"nodemon --exec ts-node src/index.ts\""
   },
   "keywords": [],
@@ -34,6 +34,7 @@
     "@types/node": "^25.0.3",
     "@types/pg": "^8.16.0",
     "nodemon": "^3.1.11",
+    "rimraf": "^6.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }

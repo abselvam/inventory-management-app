@@ -1,5 +1,5 @@
+import "dotenv/config";
 import express from "express";
-import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
 import helmet from "helmet";
@@ -12,7 +12,6 @@ import userRoutes from "./routes/userRoutes";
 import expenseRoutes from "./routes/expenseRoutes";
 
 // configurations
-dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(helmet());

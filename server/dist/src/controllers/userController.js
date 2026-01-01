@@ -1,16 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsers = void 0;
-const adapter_pg_1 = require("@prisma/adapter-pg");
+exports.getUsers = exports.adapter = void 0;
+const client_1 = require("@prisma/client");
 const pg_1 = require("pg");
-const prisma_1 = require("../../generated/prisma");
+const adapter_pg_1 = require("@prisma/adapter-pg");
+// const prisma = new PrismaClient();
+const databaseUrl = process.env.DATABASE_URL;
+if (!databaseUrl) {
+    console.error("DATABASE_URL not found in process.env!");
+    process.exit(1);
+}
+// Create a Postgres pool
 const pool = new pg_1.Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: databaseUrl,
 });
-// Create adapter
-const adapter = new adapter_pg_1.PrismaPg(pool);
-// Create PrismaClient with adapter
-const prisma = new prisma_1.PrismaClient({ adapter });
+// Export adapter for PrismaClient
+exports.adapter = new adapter_pg_1.PrismaPg(pool);
+const prisma = new client_1.PrismaClient({ adapter: exports.adapter });
 const getUsers = async (req, res) => {
     try {
         const users = await prisma.users.findMany();

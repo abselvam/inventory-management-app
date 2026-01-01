@@ -1,12 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -25,8 +18,8 @@ model Products {
   price         Float
   rating        Float?
   stockQuantity Int
-  Sales         Sales[]
   Purchases     Purchases[]
+  Sales         Sales[]
 }
 
 model Sales {
@@ -83,5 +76,5 @@ model ExpenseByCategory {
   category            String
   amount              BigInt
   date                DateTime
-  epenseSummary       ExpenseSummary @relation(fields: [expenseSummaryId], references: [expenseSummaryId])
+  expenseSummary      ExpenseSummary @relation(fields: [expenseSummaryId], references: [expenseSummaryId])
 }
